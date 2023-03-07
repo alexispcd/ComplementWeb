@@ -1,5 +1,7 @@
 import data from './countries.json';
 
+
+
 class Country {
     static all_countries = [];
 
@@ -43,4 +45,23 @@ class Country {
         }
         return borders;
     }
+}
+
+class Currency{
+    constructor(){
+        this.all_currencies = [];
+    }
+
+
+    toString(){
+        console.log(this.all_currencies);
+        return this.all_currencies;
+    }
+
+    static addCurrency(country){
+        let currency = country.currencies.code;
+        this.all_currencies.push(country);
+    }
+
+    
 }
