@@ -37,6 +37,10 @@ class Country {
     }
 
     getBorders() {
-        return this.borders;
+        let borders = [];
+        for (let border of this.borders) {
+            borders.push(Country.all_countries[border]);
+        }
+        return borders;
     }
 }
