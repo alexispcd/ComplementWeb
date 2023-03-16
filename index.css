@@ -1,0 +1,40 @@
+#countries {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.country {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 20%;
+    height: 15em;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #ccc;
+    background-color: #f5f5f5;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.country:hover {
+    box-shadow: 0 0 10px #ccc;
+    transform: scale(1.05);
+}
+
+.country-name {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.country-flag-img {
+    display: inline-block;
+    vertical-align: middle;
+    width: 10em;
+    margin-right: 10px;
+}
