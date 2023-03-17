@@ -117,10 +117,10 @@ async function main() {
         // console.log(sortingDecreasingDensity());
         // console.log('moreTopLevelDomains()');
         // console.log(moreTopLevelDomains());
-        console.log(country.name.en);
-        console.log('veryLongTrip()');
-        console.log(veryLongTrip(country.name.en));
-        console.log('==============================================')
+        // console.log(country.name.en);
+        // console.log('veryLongTrip()');
+        // console.log(veryLongTrip(country.name.en));
+        // console.log('==============================================')
 
         // HTML CREATION
         let htmlCountry = document.createElement("div");
