@@ -116,24 +116,28 @@ function moreTopLevelDomains() {
 }
 
 
-function veryLongTrip(countryName, res = new Set()) {
-    let country = '';
-    for (let c of Object.values(Country.all_countries)) {
-        console.log('test');
-        if (c.name.en === countryName) {
-            country = c;
-            break;
-        }
-    }
+//function veryLongTrip(countryName, res = new Set(), passed = new Set()) {
     
-    // for (let countryBorder of country.getBorders()) {
-    //     for(let resCont of veryLongTrip(countryBorder.name.en, res)) {
-    //         res.add(resCont);
-    //         let taille = res.length;
-    //         res.add(country);
-    //         if (taille === res.size) {
-    //             return res;
+    // console.log(countryName);
+    // passed.add(countryName);
+    // for (Object.values(Country.all_countries)) {
+    //     if (country.alpha3Code === countryName) {
+    //         console.log(country);
+    //         for (let c of country.getBorders()) {
+            
+    //             res.add(c.alpha3Code);
+    //             for (let c2 of Object.values(passed)) {
+    //                 console.log(c2, countryName);
+    //                 if (c2 === countryName) {
+    //                     return res;
+    //                 }
+    //                 else
+    //                 {
+    //                     res.add(recur = veryLongTrip(c.alpha3Code, res, passed));
+    //                 }
+    //             }
+                    
     //         }
-    //     }
-    // }
-}
+    //     }  
+    // }          
+    // return res;
