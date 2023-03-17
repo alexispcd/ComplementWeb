@@ -10,7 +10,7 @@ class Country {
         this.demonym = country.demonym;
         this.flag = country.flags.svg;
         this.name = {
-            fr: country.translations.fr,
+            fr: country.translations.fr !== 'undefined' ? country.translations.fr : country.name,
             en: country.name,
             es: country.translations.es,
             it: country.translations.it,
@@ -68,7 +68,9 @@ class Language {
 
 async function fill_db() {
 
-    const data = await fetch("countries.json").then((response) => response.json());
+    //const data = await fetch("countries.json").then((response) => response.json());
+
+    const data = countries
 
     for (let i = 0; i < data.length; i++) {
         country = data[i];
@@ -95,51 +97,27 @@ async function fill_db() {
 async function main() {
     await fill_db();
 
-    let elemCountries = document.getElementById("countries");
+    let elemCountries = document.getElementsByTagName('tbody')
 
-    for (let c in Country.all_countries) {
-        const country = Country.all_countries[c];
-
-        //TEST
-        // console.log('outSideTheContinent()')
-        // console.log(outSideTheContinent());
-        // console.log('moreNeighbours()')
-        // console.log(moreNeighbours());
-        // console.log('neighborless()')
-        // console.log(neighborless());
-        // console.log('moreLanguages()')
-        // console.log(moreLanguages());
-        // console.log('withCommonLanguages()')
-        // console.log(withCommonLanguages());
-        // console.log('withoutCommonCurrency()');
-        // console.log(withoutCommonCurrency())
-        // console.log('sortingDecreasingDensity()');
-        // console.log(sortingDecreasingDensity());
-        // console.log('moreTopLevelDomains()');
-        // console.log(moreTopLevelDomains());
-        // console.log(country.name.en);
-        // console.log('veryLongTrip()');
-        // console.log(veryLongTrip(country.name.en));
-        // console.log('==============================================')
+    for (let country of Object.values(Country.all_countries)) {
 
         // HTML CREATION
-        let htmlCountry = document.createElement("div");
+        let htmlCountry = document.createElement("tr");
         htmlCountry.id = country.alpha3Code;
         htmlCountry.className = "country";
         htmlCountry.innerHTML =
             `
-            <div class="country-name">
-                <h2>${country.name.fr}</h2>
-            </div>
-            <div class="country-flag">
-                <img class="country-flag-img" src="${country.flag}" alt="${country.name.en} flag">
-            </div>
-            <div class="country-population">
-                <p>Population: ${country.population}</p>
-            </div>
+            <td>${country.name.fr}</td>
+            <td>${country.population}</td>
+            <td>${country.area}</td>
+            <td>${country.getPopDensity()}</td>
+            <td>${country.region}</td>
+            <td>
+                <img src="${country.flag}"/>
+            </td>
             `
         ;
-        elemCountries.appendChild(htmlCountry);
+        elemCountries[0].appendChild(htmlCountry);
     }
 }
 
