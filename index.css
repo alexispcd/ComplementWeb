@@ -1,3 +1,7 @@
+.container {
+    margin-bottom: 6em;
+}
+
 table {
     background-color: #F2F2F2;
 }
@@ -11,7 +15,44 @@ thead {
     top: 0;
 }
 
+
+
 h1 {
     text-align: center;
     padding: 1em 0;
+}
+
+#pagination {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 3em;
+}
+
+button {
+    background-color: #F2F2F2 !important;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 3em;
+    margin: 0 0.5em;
+}
+
+button:hover {
+    background-color: #E6E6E6 !important;
+}
+
+button:active {
+    background-color: #D9D9D9 !important;
+}
+
+.page {
+    background-color: #F2F2F2;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 3em;
+    margin: 0 0.5em;
 }

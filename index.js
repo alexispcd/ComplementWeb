@@ -73,7 +73,7 @@ async function fill_db() {
     const data = countries
 
     for (let i = 0; i < data.length; i++) {
-        country = data[i];
+        let country = data[i];
 
         //Country creation
         Country.all_countries[country.alpha3Code] = new Country(country);
@@ -94,7 +94,7 @@ async function fill_db() {
     }
 }
 
-async function main() {
+window.onload = async function () {
     await fill_db();
 
     let elemCountries = document.getElementsByTagName('tbody')
@@ -119,6 +119,53 @@ async function main() {
         ;
         elemCountries[0].appendChild(htmlCountry);
     }
+
+    pagination();
 }
 
-main();
+function pagination() {
+    let countries = document.getElementsByClassName("country");
+    let nbPages = Math.ceil(countries.length / 25);
+    let page = 1;
+
+    let htmlTotalPages = document.getElementById("totalPages");
+    htmlTotalPages.innerHTML = nbPages;
+
+    let htmlPage = document.getElementById("page");
+    htmlPage.innerHTML = page;
+
+    for (let i = 0; i < countries.length; i++) {
+        if (i >= 25) {
+            countries[i].style.display = "none";
+        }
+    }
+
+    let previous = document.getElementById("previous");
+    let next = document.getElementById("next");
+
+    previous.addEventListener("click", function() {
+        if (page > 1) {
+            page--;
+            paginationButton()
+        }
+    });
+
+    next.addEventListener("click", function() {
+        if (page < nbPages) {
+            page++;
+            paginationButton()
+        }
+    });
+
+    function paginationButton() {
+        htmlPage.innerHTML = page;
+        for (let i = 0; i < countries.length; i++) {
+            if (i >= (page - 1) * 25 && i < page * 25) {
+                countries[i].style.display = "";
+            } else {
+                countries[i].style.display = "none";
+            }
+
+        }
+    }
+}
