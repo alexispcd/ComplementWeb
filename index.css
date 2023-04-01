@@ -15,11 +15,10 @@ thead {
     top: 0;
 }
 
-
-
 h1 {
     text-align: center;
     padding: 1em 0;
+    
 }
 
 #pagination {
@@ -55,4 +54,34 @@ button:active {
     padding: 0.5em 1em;
     border-radius: 3em;
     margin: 0 0.5em;
+}
+
+#animation {
+    list-style: none;
+  }
+
+#animation>li {
+    opacity: 0;
+    transform: translateY(50%);
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+  
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+#animation>li:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  cursor: pointer;
+  background-color: #e6e6e6;
 }
