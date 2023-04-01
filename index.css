@@ -1,89 +1,114 @@
 .container {
-  margin-bottom: 6em;
+    margin-bottom: 6em;
 }
 
 table {
-  background-color: #F2F2F2;
+    background-color: #F2F2F2;
 }
 
 img {
-  height: 50px;
+    height: 50px;
 }
 
 thead {
-  position: sticky;
-  top: 0;
+    position: sticky;
+    top: 0;
 }
 
 
 
 h1 {
-  text-align: center;
-  padding: 1em 0;
+    text-align: center;
+    padding: 1em 0;
 }
 
 #pagination {
-  display: flex;
-  justify-content: center;
-  padding: 1em;
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  border-radius: 3em;
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 3em;
 }
 
 button {
-  background-color: #F2F2F2 !important;
-  border: none;
-  padding: 0.5em 1em;
-  border-radius: 3em;
-  margin: 0 0.5em;
+    background-color: #F2F2F2 !important;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 3em;
+    margin: 0 0.5em;
 }
 
 button:hover {
-  background-color: #E6E6E6 !important;
+    background-color: #E6E6E6 !important;
 }
 
 button:active {
-  background-color: #D9D9D9 !important;
+    background-color: #D9D9D9 !important;
 }
 
 .page {
-  background-color: #F2F2F2;
-  border: none;
-  padding: 0.5em 1em;
-  border-radius: 3em;
-  margin: 0 0.5em;
+    background-color: #F2F2F2;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 3em;
+    margin: 0 0.5em;
 }
 
 h2  {
-  text-align: center;
-  width: 100%;
+    text-align: center;
+    width: 100%;
 }
 
 #filters {
-  padding: 1em;
-  position: fixed;
-  top: 50%;
-  left: -14em;
-  transform: translate(0, -50%);
-  border-radius: 0 2.5em 2.5em 0;
-  width: 15em;
-  color: #F2F2F2;
-  gap: 20px;
-  /*transition and add time before go to initial position*/
-  transition: left 0.5s;
-}
-
-#filters:hover {
-  left: 0;
+    padding: 1em;
+    position: fixed;
+    top: 50%;
+    left: 1em;
+    transform: translate(0, -50%);
+    border-radius: 2.5em;
+    width: 15em;
+    color: #F2F2F2;
+    gap: 20px;
 }
 
 label {
-  font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 .form-group {
-  width: 100%;
+    width: 100%;
+}
+
+
+#animation {
+    list-style: none;
+}
+
+#animation>li {
+    opacity: 0;
+    transform: translateY(50%);
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+#animation>li:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    cursor: pointer;
+    background-color: #e6e6e6;
 }

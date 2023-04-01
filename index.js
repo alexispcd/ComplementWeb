@@ -23,9 +23,13 @@ class Country {
     }
 
     toString() {
-        return this.name;
-    }
+        if (this.borders == []) {
+            this.borders = "pas de frontières";
+        }
+        return "Nom: " + this.name.fr + "\n Code :" + this.alpha3Code + "\n Population: " + this.population + "\n Superficie: " + this.area + "\n Densité: " + this.getPopDensity() + "\n Capitale: " + this.capital + "\n Région: " + this.region + "\n Démographie: " + this.demonym +  "\n Devise: " + this.getCurrencies() +  "\n Frontières: " + this.borders + "\n";
 
+    }
+    
     getPopDensity() {
         return this.area === 0 ? 0 : this.population / this.area;
     }
@@ -107,16 +111,18 @@ window.onload = async function () {
         htmlCountry.dataset.region = country.region;
         htmlCountry.id = country.alpha3Code;
         htmlCountry.className = "country";
+        let countryNameString = "'" + String(country.alpha3Code) + "'";
+        let flagLink = "'" + String(country.flag) + "'";
         htmlCountry.innerHTML =
             `
-            <td>${country.name.fr}</td>
-            <td>${country.population}</td>
-            <td>${country.area}</td>
-            <td>${country.getPopDensity()}</td>
-            <td>${country.region}</td>
-            <td>
-                <img src="${country.flag}" alt="${country.name.fr} flag"/>
-            </td> 
+            <td onclick="afficherDiv(${countryNameString})">${country.name.fr}</td>
+            <td onclick="afficherDiv(${countryNameString})">${country.population}</td>
+            <td onclick="afficherDiv(${countryNameString})">${country.area}</td>
+            <td onclick="afficherDiv(${countryNameString})">${country.getPopDensity()}</td>
+            <td onclick="afficherDiv(${countryNameString})">${country.region}</td>
+            <td onclick="afficheDrapeau(${flagLink})">
+                <img src="${country.flag}"/>
+            </td>
             `
         ;
         elemCountries[0].appendChild(htmlCountry);
@@ -219,4 +225,109 @@ function pagination(region, language, name) {
 
         htmlPage.innerHTML = page;
     }
+}
+
+function afficheDrapeau(drapeau) {
+    // Créé un élément HTML pour l'image
+    var img = document.createElement("img");
+    img.src = drapeau;
+    img.style.position = "fixed";
+    img.style.top = "50%";
+    img.style.left = "50%";
+    img.style.transform = "translate(-50%, -50%)";
+    img.style.zIndex = "9999";
+    img.style.width = "50%";
+    img.style.height = "auto";
+
+    // Ajoute l'image à la page
+    document.body.appendChild(img);
+
+    // Créé un élément HTML pour le fond sombre
+    var fondSombre = document.createElement("div");
+    fondSombre.style.position = "fixed";
+    fondSombre.style.top = "0";
+    fondSombre.style.left = "0";
+    fondSombre.style.width = "100%";
+    fondSombre.style.height = "100%";
+    fondSombre.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    fondSombre.style.zIndex = "9998";
+    img.style.transform = "translate(-50%, -50%) scale(0)";
+    img.style.transition = "transform 0.5s, opacity 0.5s";
+
+    // Ajoute le fond sombre à la page
+    document.body.appendChild(fondSombre);
+
+    setTimeout(function() {
+        img.style.transform = "translate(-50%, -50%) scale(1)";
+        img.style.opacity = "1";
+    }, 50);
+
+    // Ajoute un événement pour cacher l'image lorsque l'on clique en dehors
+    fondSombre.addEventListener("click", function() {
+        document.body.removeChild(img);
+        document.body.removeChild(fondSombre);
+    });
+}
+
+function getcountrybyalpha3code(alpha3code) {
+    for (let country of Object.values(Country.all_countries)) {
+        if (country.alpha3Code === alpha3code) {
+            return country;
+        }
+    }
+}
+
+function parseStringToHtmlList(inputString) {
+    console.log(inputString)
+    const lines = inputString.split('\n'); // sépare la chaîne en plusieurs lignes
+    let result = '<ul id="animation">';
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim(); // retire les espaces en début et fin de ligne
+        if (line.length > 0) {
+            const [type, content] = line.split(':'); // sépare la ligne en type et contenu
+            result += `<li><strong>${type.trim()}:</strong> ${content.trim()}</li>`; // ajoute le type et le contenu à la liste HTML
+        }
+    }
+    result += "</ul>";
+    return result;
+}
+
+function afficherDiv(countryName) {
+
+    var maDiv = document.createElement("div");
+    maDiv.style.position = "fixed";
+    maDiv.style.top = "50%";
+    maDiv.style.left = "50%";
+    maDiv.style.transform = "translate(-50%, -50%)";
+    maDiv.style.zIndex = "9999";
+    maDiv.style.backgroundColor = "white";
+    maDiv.style.padding = "20px";
+    maDiv.style.frontSize = "18em";
+
+    actualCountry = getcountrybyalpha3code(countryName);
+    maDiv.innerHTML = `${parseStringToHtmlList(actualCountry.toString())} `;
+
+    // Ajouter la div à la page
+    document.body.appendChild(maDiv);
+
+    var fondSombre = document.createElement("div");
+    fondSombre.style.position = "fixed";
+    fondSombre.style.top = "0";
+    fondSombre.style.left = "0";
+    fondSombre.style.width = "100%";
+    fondSombre.style.height = "100%";
+    fondSombre.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    fondSombre.style.zIndex = "9998";
+
+    // Ajouter le fond sombre
+    document.body.appendChild(fondSombre);
+
+
+    // Cache la div
+    fondSombre.addEventListener("click", function() {
+        document.body.removeChild(maDiv);
+        document.body.removeChild(fondSombre);
+    });
+
+    return maDiv;
 }
