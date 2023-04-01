@@ -6,10 +6,29 @@
         <link rel="icon" href="https://img.icons8.com/ios/50/000000/earth.png" type="image/png" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="index.css">
-        <title>Pays du Monde    </title>
+        <title>Pays du Monde</title>
     </head>
     <body>
-        <div class="container d-flex flex-column justify-content-center align-items-center">
+        <div id="filters" class="bg-dark d-flex flex-column justify-content-center align-items-start">
+            <h2>Filtres</h2>
+            <div class="form-group">
+                <label for="region">Continent</label>
+                <select class="form-control" id="region">
+                    <option value="all">Tous</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="language">Langage</label>
+                <select class="form-control" id="language">
+                    <option value="all">Tous</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="name">Nom</label>
+                <input type="text" class="form-control" id="name" placeholder="Entrez le nom du pays" value="">
+            </div>
+        </div>
+        <div id="main" class="container d-flex flex-column justify-content-center align-items-center">
             <h1>Pays du monde</h1>
             <table class="table table-bordered">
                 <thead class="thead-dark">
