@@ -29,7 +29,7 @@ class Country {
         return "Nom: " + this.name.fr + "\n Code :" + this.alpha3Code + "\n Population: " + this.population + "\n Superficie: " + this.area + "\n Densité: " + this.getPopDensity() + "\n Capitale: " + this.capital + "\n Région: " + this.region + "\n Démographie: " + this.demonym +  "\n Devise: " + this.getCurrencies() +  "\n Frontières: " + this.borders + "\n";
 
     }
-    
+
     getPopDensity() {
         return this.area === 0 ? 0 : this.population / this.area;
     }
@@ -97,7 +97,7 @@ async function fill_db() {
     }
 }
 
-window.onload = async function () {
+window.onload = async () => {
     await fill_db();
 
     let elemCountries = document.getElementsByTagName('tbody')
@@ -146,13 +146,27 @@ window.onload = async function () {
     languageFilter.addEventListener("change", applyFilters);
     nameFilter.addEventListener("input", applyFilters);
 
-    pagination("all", "all", "")
+    let countries = document.getElementsByClassName("country");
+
+    pagination(countries,"all", "all", "")
 
     function applyFilters() {
         let region = regionFilter.value;
         let language = languageFilter.value;
         let name = nameFilter.value;
-        pagination(region, language, name);
+        let countries = document.getElementsByClassName("country");
+        pagination(countries, region, language, name);
+    }
+
+    let tableHeads = document.getElementsByTagName('th');
+    for (let th of tableHeads) {
+        if (th.dataset.column === undefined) break;
+
+        let chevron = th.getElementsByTagName('i')[0];
+        th.onclick = () => {
+            chevron.style.transform = chevron.style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)';
+            sortColumn(th.dataset.column, chevron.style.transform === 'rotate(180deg)' ? 1 : 0);
+        }
     }
 }
 
@@ -180,8 +194,7 @@ function filter(countries, region, language, name) {
     return filteredCountries;
 }
 
-function pagination(region, language, name) {
-    let countries = document.getElementsByClassName("country");
+function pagination(countries, region, language, name) {
     let filteredCountries = filter(countries, region, language, name);
 
     let nbPages = Math.ceil(filteredCountries.length / 25);
@@ -225,6 +238,52 @@ function pagination(region, language, name) {
 
         htmlPage.innerHTML = page;
     }
+}
+
+function sortColumn(column, reverse = false) {
+    let sortedCountries;
+    let countries = document.getElementsByClassName("country");
+
+    if (column === "name") {
+        sortedCountries = Array.from(countries).sort((a, b) => {
+            if (a.children[0].innerHTML < b.children[0].innerHTML) return -1;
+            if (a.children[0].innerHTML > b.children[0].innerHTML) return 1;
+            return 0;
+        });
+    } else if (column === "population") {
+        sortedCountries = Array.from(countries).sort((a, b) => {
+            return parseFloat(a.children[1].innerHTML) - parseFloat(b.children[1].innerHTML);
+        });
+    } else if (column === "area") {
+        sortedCountries = Array.from(countries).sort((a, b) => {
+            return parseFloat(a.children[2].innerHTML) - parseFloat(b.children[2].innerHTML);
+        });
+    } else if (column === "density") {
+        sortedCountries = Array.from(countries).sort((a, b) => {
+            return parseFloat(a.children[3].innerHTML) - parseFloat(b.children[3].innerHTML);
+        });
+    } else if (column === "region") {
+        sortedCountries = Array.from(countries).sort((a, b) => {
+            if (a.children[4].innerHTML < b.children[4].innerHTML) return -1;
+            if (a.children[4].innerHTML > b.children[4].innerHTML) return 1;
+            return 0;
+        });
+    }
+
+    if (reverse) {
+        sortedCountries.reverse();
+    }
+
+    let tbody = document.getElementsByTagName('tbody')[0];
+    for (let country of sortedCountries) {
+        tbody.appendChild(country);
+    }
+
+    let regionFilter = document.getElementById('region').value;
+    let languageFilter = document.getElementById('language').value;
+    let nameFilter = document.getElementById('name').value;
+
+    pagination(sortedCountries, regionFilter, languageFilter, nameFilter)
 }
 
 function afficheDrapeau(drapeau) {
@@ -331,3 +390,4 @@ function afficherDiv(countryName) {
 
     return maDiv;
 }
+
