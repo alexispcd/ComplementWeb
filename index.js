@@ -71,9 +71,9 @@ class Language {
 
 async function fill_db() {
 
-    //const data = await fetch("countries.json").then((response) => response.json());
+    const data = await fetch("http://localhost:6789/gateway.php").then((response) => response.json());
 
-    const data = countries
+    // const data = countries
 
     for (let i = 0; i < data.length; i++) {
         let country = data[i];
